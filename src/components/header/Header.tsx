@@ -12,7 +12,7 @@ const Header = () => {
     };
 
     return(
-        <AppBar sx={{backgroundColor:"var(--background-color)"}}>
+        <AppBar sx={{backgroundColor:"var(--background-color)", position:'relative'}}>
             <Container maxWidth="xl" >
                 <Toolbar disableGutters >
                     <img src="src/assets/logo.svg" alt="logo" />
