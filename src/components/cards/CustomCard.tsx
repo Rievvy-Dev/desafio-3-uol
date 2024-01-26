@@ -1,6 +1,12 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 
 const CustomCard = ({...rest}) => {
+    const handleLearnMore = () => {
+        const searchQuery = encodeURIComponent(`${rest.model.name} car`);
+        const searchUrl = `https://www.google.com/search?q=${searchQuery}`;
+        window.open(searchUrl, "_blank");
+    };
+    
     return(
         <Box>
             <Card sx={{ 
@@ -49,7 +55,16 @@ const CustomCard = ({...rest}) => {
                 
                 <Box sx={{display:"flex", width:"100%", justifyContent:"flex-end"}}>
                     <CardActions >
-                        <Button size="small" sx={{display:"flex", color:"var(--detail-color)"}}>Learn More</Button> 
+                        <Button 
+                        size="small"
+                        sx={{
+                            display:"flex", 
+                            color:"var(--detail-color)"
+                        }}
+                        onClick={handleLearnMore}
+                        >
+                        Learn More
+                        </Button> 
                     </CardActions>
                 </Box>
             </Card>
