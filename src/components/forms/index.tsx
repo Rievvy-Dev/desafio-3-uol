@@ -29,17 +29,17 @@ const VTextField: React.FC<TVTextFieldProps> = ({ name, shrink = true, ...rest }
       InputLabelProps={{
         shrink,
         sx: {
-          fontFamily: "Roboto",
-          top: "5px",
-          fontSize: "16",
-          color: shrink ? "#FFFFFF" : "#666666", 
-          fontWeight: "400",
-          lineHeight: "12px",
-          letterSpacing: "0.15px",
-          "&.Mui-focused": {
-            color: "var(--detail-color)", 
-            display:"none"
-          },
+            fontFamily: "Roboto",
+            top: "5px",
+            fontSize: "16",
+            color: shrink ? "#FFFFFF" : "#666666", 
+            fontWeight: "400",
+            lineHeight: "12px",
+            letterSpacing: "0.15px",
+            "&.Mui-focused": {
+                color: "var(--detail-color)",
+                display: !shrink ? "none" : "inherit"
+            },
         },
       }}
       {...rest}
@@ -66,7 +66,8 @@ const VTextField: React.FC<TVTextFieldProps> = ({ name, shrink = true, ...rest }
           },
           "& input": {
             color: "#FFFFFF",
-          },
+            
+            },
         },
       }}
       InputProps={{

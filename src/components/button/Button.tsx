@@ -16,8 +16,10 @@ const CustomButton = ({...rest}) => {
                 }
             }
         }
+        onSubmit={rest.onSubmit}
         >   {rest.icon ? <SearchOutlinedIcon/> : null}
             {rest.label}
+            
         </Button>
     )
 }
