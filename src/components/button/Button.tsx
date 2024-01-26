@@ -10,6 +10,7 @@ const CustomButton = ({...rest}) => {
             {
                 background:"var(--detail-color)",
                 width:`${rest.width}`,
+                padding:`${rest.padding}`,
                 "&:hover": {
                     background:"var(--background-color)"
                 }

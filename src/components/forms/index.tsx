@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 
 type TVTextFieldProps = TextFieldProps & {
   name: string;
+  shrink?: boolean;
 };
 
-const VTextField: React.FC<TVTextFieldProps> = ({ name, ...rest }) => {
+const VTextField: React.FC<TVTextFieldProps> = ({ name, shrink = true, ...rest }) => {
   const { fieldName, registerField, defaultValue, error,  } = useField(name);
   const [value, setValue] = useState(defaultValue || '');
 
@@ -26,17 +27,18 @@ const VTextField: React.FC<TVTextFieldProps> = ({ name, ...rest }) => {
   return (
     <TextField
       InputLabelProps={{
-        shrink: true,
+        shrink,
         sx: {
           fontFamily: "Roboto",
           top: "5px",
           fontSize: "16",
-          color: "#FFFFFF", 
+          color: shrink ? "#FFFFFF" : "#666666", 
           fontWeight: "400",
           lineHeight: "12px",
           letterSpacing: "0.15px",
           "&.Mui-focused": {
             color: "var(--detail-color)", 
+            display:"none"
           },
         },
       }}
