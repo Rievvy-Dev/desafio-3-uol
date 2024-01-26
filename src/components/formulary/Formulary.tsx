@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, Switch, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardMedia, Switch, Typography } from "@mui/material";
 import { Form } from "@unform/web";
 import VTextField from "../forms";
 import VDropDownSearch from "../dropdown/Dropdown";
@@ -12,12 +12,13 @@ const Formulary = () => {
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [checked, setChecked] = useState(false)
+  const [selectedCarType, setSelectedCarType] = useState<string | null>(null);
 
   const carType = [
     {
         id: 1,
         image: "/src/assets/car-sedan.svg",
-        type: "sedan"
+        type: "Sedan"
     }, 
     {
         id: 2,
@@ -57,6 +58,10 @@ const Formulary = () => {
   const handleChange = () => {
     setChecked(!checked);
   }
+
+  const handleCarTypeClick = (carType: string) => {
+    setSelectedCarType(carType);
+  };
 
   return (
     <Box>
@@ -100,7 +105,7 @@ const Formulary = () => {
             checked={checked}
             onChange={handleChange}
             sx={{
-                "& .Mui-checked + .MuiSwitch-track": {
+                "& .Mui-checked+.MuiSwitch-track": {
                     backgroundColor: "rgba(251, 164, 3, 0.20)",
                     
                 },
@@ -135,50 +140,62 @@ const Formulary = () => {
             >
                 Select your car type
             </Typography>
-            <Box sx={{display:"flex", gap:"1%", width:"100%"}}>
+            <Box sx={{display:"flex", gap:"2%", width:"100%"}}>
                 {carType.map((car) => (
-                    <Card 
-                    key={car.id} 
-                    sx={{
-                        width:"100%",
-                        backgroundColor:"var(--background-color)",
-                        height: "80px",
-                        display:"flex", 
-                        flexDirection:"column",
-                        justifyContent:"center",
-                        alignItems:"center",
-                        gap:"5px",
-                        flex:"1 0 0",
-                        borderRadius:"4px",
-                        border:"1px solid #FFF"
-                    }}>
-                        <Box 
-                        sx={{
-                            margin:"5px",
-                            display:"flex",
-                            justifyContent:"center",
-                            alignItems:"center",
-                            flexDirection:"column"
-                        }}
-                        >
-                            <img src={car.image} alt={car.type}/>
-                            <CardContent
-                            sx={{
-                                
-                                color:"#FFF",
-                                textAlign:"center",
-                                fontFamily:"Roboto",
-                                fontSize: "14px",
-                                fontWeight: "400",
-                                lineHeight:"26px"
-                            }}
-                            >
-                                {car.type}
-                            </CardContent>
-                        </Box>
-                    </Card>
-                )
-                )}
+                   <CardActionArea
+                   key={car.id}
+                   onClick={() => handleCarTypeClick(car.type)}
+                   sx={{
+                     flex: "1 0 0",
+                     borderRadius: "4px",
+                     border: "1px solid #FFF",
+                     "&:hover": {
+                       backgroundColor: "rgba(255, 255, 255, 0.1)"
+                     }
+                   }}
+                 >
+                   <Card
+                     sx={{
+                       width: "100%",
+                       backgroundColor: "var(--background-color)",
+                       height: "80px",
+                       display: "flex",
+                       flexDirection: "column",
+                       justifyContent: "center",
+                       alignItems: "center",
+                       gap: "5px"
+                     }}
+                   >
+                     <Box
+                       sx={{
+                         width: "100%",
+                         display: "flex",
+                         justifyContent: "center",
+                         alignItems: "center",
+                         flexDirection: "column"
+                       }}
+                     >
+                       <img src={car.image} alt={car.type} />
+                       <CardContent
+                         sx={{
+                           "&:last-child": {
+                             paddingBottom: "0px"
+                           },
+                           padding: "0",
+                           color: selectedCarType === car.type ? "var(--detail-color)" : "#FFF",
+                           textAlign: "center",
+                           fontFamily: "Roboto",
+                           fontSize: "14px",
+                           fontWeight: "400",
+                           lineHeight: "26px"
+                         }}
+                       >
+                         {car.type}
+                       </CardContent>
+                     </Box>
+                   </Card>
+                 </CardActionArea>
+               ))}
             </Box>
         </Box> 
         : null
