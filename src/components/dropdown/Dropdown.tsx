@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Autocomplete, {
-  AutocompleteRenderOptionState,
   AutocompleteRenderInputParams,
 } from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -20,7 +19,6 @@ const VDropDownSearch: React.FC<TVDropDownSearchProps> = ({
   name,
   options,
   onChange,
-  maxItems = 5,
 }) => {
   const { fieldName, registerField, defaultValue, error } = useField(name);
   const [value, setValue] = useState<string | null>(defaultValue || null);
