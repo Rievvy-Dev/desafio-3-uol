@@ -75,7 +75,8 @@ const Formulary = () => {
             marginBottom:"20px",
             display:"flex",
             flexDirection:"column",
-            gap:"20px"
+            gap:"20px",
+            alignItems: "center"
         }}
       >
         <VTextField name="Full Name" shrink={false} label="Full Name" />
@@ -90,9 +91,12 @@ const Formulary = () => {
         <Box sx={{
             display:"flex",
             justifyContent: "space-between",
-            alignItems:"center"
+            flexDirection:"row",
+            alignItems:"center",
+            width:"100%"
         }}>
             <Typography sx={{
+                
                 color:"#FFFFFF", 
                 fontFamily:"Roboto", 
                 fontSize:"16px",
@@ -105,7 +109,7 @@ const Formulary = () => {
             checked={checked}
             onChange={handleChange}
             sx={{
-                "& .Mui-checked+.MuiSwitch-track": {
+                "& .Mui-checked +.MuiSwitch-track": {
                     backgroundColor: "rgba(251, 164, 3, 0.20)",
                     
                 },
@@ -125,7 +129,7 @@ const Formulary = () => {
             flexDirection:"column",
             justifyContent:"flex-start",
             alignItems:"flex-start",
-            width:"620px",
+            width:"100%",
             gap:"16px"
         }}
         >
@@ -140,7 +144,7 @@ const Formulary = () => {
             >
                 Select your car type
             </Typography>
-            <Box sx={{display:"flex", gap:"2%", width:"100%"}}>
+            <Box sx={{display:"flex", gap:"2%", width:"620px"}}>
                 {carType.map((car) => (
                    <CardActionArea
                    key={car.id}
@@ -200,7 +204,9 @@ const Formulary = () => {
         </Box> 
         : null
         }
-        <CustomButton label="Submit" width="max-content" padding="10px 24px"/>
+        <Box sx={{width:"100%", justifyContent:"flex-start"}}>
+            <CustomButton label="Submit" width="max-content" padding="10px 24px"/>
+        </Box>
       </Form>
     </Box>
   );

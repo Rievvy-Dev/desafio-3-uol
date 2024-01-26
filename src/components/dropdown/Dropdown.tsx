@@ -1,21 +1,48 @@
-import React, { useEffect, useState, useCallback } from "react";
-import Autocomplete, {
-  AutocompleteRenderInputParams,
-} from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import { useField } from "@unform/core";
+import React, { useEffect, useState, useCallback } from 'react';
+import { useField } from '@unform/core';
+import Select from '@mui/material/Select';
+import InputBase from '@mui/material/InputBase';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import IconButton from '@mui/material/IconButton';
+import { InputAdornment } from '@mui/material';
 
-type TVDropDownSearchProps = {
+interface VDropDownSearchProps {
   name: string;
   options: string[];
   onChange: (newValue: string | null) => void;
-  maxItems?: number;
+}
+
+const BootstrapInput: React.FC<any> = (props) => {
+  return (
+    <InputBase
+      {...props}
+      sx={{
+        borderRadius: "4px",
+        width:"100%",
+        position: 'relative',
+        color:"#FFF",
+        backgroundColor: 'var(--formulary-color)',
+        border: '1px solid var(--Other-Outline-Border, rgba(255, 255, 255, 0.23))',
+        fontSize: 16,
+        padding: '10px 26px 10px 12px',
+        transition: 'border-color 0.2s',
+        '&:focus': {
+          borderRadius: "4px",
+          borderColor: 'var(--detail-color)',
+          boxShadow: '0 0 0 0.2rem rgba(251, 164, 3, 0.25)',
+        },
+        '&.Mui-error': {
+          borderColor: 'var(--error-color)',
+        },
+      }}
+    />
+  );
 };
 
-const VDropDownSearch: React.FC<TVDropDownSearchProps> = ({
+const VDropDownSearch: React.FC<VDropDownSearchProps> = ({
   name,
   options,
   onChange,
@@ -32,68 +59,69 @@ const VDropDownSearch: React.FC<TVDropDownSearchProps> = ({
   );
 
   useEffect(() => {
-    console.log("Options:", options);
     registerField({
       name: fieldName,
       getValue: () => value,
       setValue: (_, newValue) => setValue(newValue),
     });
-  }, [registerField, fieldName, value, options]);
+  }, [registerField, fieldName, value]);
 
   return (
-    <Autocomplete
-      options={options || ['AAAAAAA', 'AAAAAAAA']}
-      value={value}
-      onChange={(_, newValue) => handleValueChange(newValue)}
-      renderInput={(params: AutocompleteRenderInputParams) => (
-        <TextField
-          {...params}
-          label=""
-          error={!!error}
-          helperText={error}
-          autoComplete="off"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            alignSelf: "stretch",
-            borderRadius: "4px",
-            "& .MuiOutlinedInput-root": {
-              width: "100%",
-              "& fieldset": {
-                border:
-                  "1px solid var(--Other-Outline-Border, rgba(255, 255, 255, 0.23))",
-              },
-              "&:hover fieldset": {
-                border:
-                  "1px solid var(--Other-Outline-Border, rgba(255, 255, 255, 0.80))",
-              },
-              "&:focus-within fieldset": {
-                border:
-                  "1px solid var(--Other-Outline-Border, var(--detail-color))",
-              },
-              "& input": {
-                color: "#FFFFFF",
-              },
-            },
+    <FormControl sx={{ m: 1, width:"100%" }} variant="standard">
+      <InputLabel
+        htmlFor={`dropdown-search-${fieldName}`}
+        sx={{
+          fontFamily: 'Roboto',
+          top: '5px',
+          fontSize: '16px',
+          color: value ? '#FFFFFF' : '#666666',
+          fontWeight: '400',
+          lineHeight: '12px',
+          letterSpacing: '0.15px',
+          '&.Mui-focused': {
+            color: 'var(--detail-color)',
+            display: 'none',
+          },
+        }}
+      >
+        {value ? '' : 'Select'}
+      </InputLabel>
+      <Select
+        id={`dropdown-search-${fieldName}`}
+        value={value || ''}
+        onChange={(event) => handleValueChange(event.target.value as string)}
+        input={<BootstrapInput />}
+        renderValue={(selected) => selected}
+        IconComponent={() => (
+          <InputAdornment position="end">
+            <IconButton
+              name="DropDown"
+              style={{ padding: 8 }}
+              color="inherit"
+            >
+              <ArrowDropDownOutlinedIcon style={{ color: '#FFFFFF' }} />
+            </IconButton>
+          </InputAdornment>
+        )}
+      >
+        {options.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+      {!!error && (
+        <p
+          style={{
+            color: 'var(--error-color)',
+            fontSize: '12px',
+            marginTop: '4px',
           }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton name="DropDown" style={{ padding: 8 }} color="inherit">
-                  <ArrowDropDownOutlinedIcon style={{ color: "#FFFFFF" }} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+        >
+          {error}
+        </p>
       )}
-      renderOption={(props, option, state) =>
-        state.index !== null ? (
-          <li {...props}>{option}</li>
-        ) : null
-      }
-    />
+    </FormControl>
   );
 };
 
