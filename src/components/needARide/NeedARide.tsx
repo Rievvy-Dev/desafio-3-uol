@@ -11,7 +11,9 @@ const NeedARide = () => {
                 {
                     display:"flex", 
                     flexDirection:"row", 
-                    gap:"42px", marginTop:"5%", 
+                    gap:"42px", 
+                    marginTop:"5%", 
+                    marginBottom:"5%",
                     justifyContent:"center", 
                     alignItems:"center",
                     width:"max-content"
